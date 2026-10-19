@@ -2,7 +2,7 @@
 import { computed, ref } from 'vue'
 import { message } from 'ant-design-vue'
 import { DeleteOutlined, UploadOutlined } from '@ant-design/icons-vue'
-import { uploadImage } from '@/api/upload'
+import { uploadImage, validateImageFile } from '@/api/upload'
 import { assetUrl } from '@/utils/request'
 
 /* ==========================================================================
@@ -37,6 +37,12 @@ async function onFileChange(event: Event): Promise<void> {
   const file = input.files?.[0]
   input.value = ''
   if (!file) return
+
+  const invalid = validateImageFile(file)
+  if (invalid) {
+    message.warning(invalid)
+    return
+  }
 
   uploading.value = true
   broken.value = false

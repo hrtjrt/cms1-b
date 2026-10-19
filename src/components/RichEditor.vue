@@ -12,7 +12,7 @@ import {
   UnderlineOutlined,
   UnorderedListOutlined
 } from '@ant-design/icons-vue'
-import { uploadImage } from '@/api/upload'
+import { uploadImage, validateImageFile } from '@/api/upload'
 import { assetUrl } from '@/utils/request'
 import { resolveHtmlAssets, toStoredHtml } from '@/utils/html'
 
@@ -109,6 +109,12 @@ async function onFileChange(event: Event): Promise<void> {
   input.value = ''
   if (!file) return
 
+  const invalid = validateImageFile(file)
+  if (invalid) {
+    message.warning(invalid)
+    return
+  }
+
   uploading.value = true
   try {
     const result = await uploadImage(file)
@@ -128,10 +134,20 @@ async function onFileChange(event: Event): Promise<void> {
 }
 
 async function insertImageByUrl(): Promise<void> {
-  const url = window.prompt('请输入图片地址')
+  const url = window.prompt('请输入图片地址（http:// 或 https:// 开头，或以 / 开头的站内地址）')
   if (!url) return
+
+  const value = url.trim()
+  // 只允许 http(s) 与站内绝对路径，拦掉 javascript: / data: 等危险协议
+  if (!/^(?:https?:\/\/|\/(?!\/))/i.test(value)) {
+    message.warning('图片地址必须以 http://、https:// 或 / 开头')
+    return
+  }
+  // 转义引号，避免闭合 src 属性后注入 onerror 等事件
+  const safe = value.replace(/"/g, '&quot;').replace(/'/g, '&#39;')
+
   await nextTick()
-  exec('insertHTML', `<img src="${url}" style="max-width: 100%;" />`)
+  exec('insertHTML', `<img src="${safe}" style="max-width: 100%;" />`)
 }
 </script>
 
