@@ -1,0 +1,343 @@
+/* ==========================================================================
+   全局样式
+   只放后端布局层需要的东西：reset 补充、滚动条、页面容器、表格紧凑化。
+   组件视觉全部交给 ant-design-vue，不自己造轮子。
+   ========================================================================== */
+
+:root {
+  --brand: #0a17da;
+  --brand-dark: #0813b0;
+  --sider-w: 220px;
+  --sider-w-collapsed: 64px;
+  --header-h: 56px;
+  --tabs-h: 40px;
+  --page-bg: #f0f2f5;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#app {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: system-ui, -apple-system, 'Segoe UI', 'Microsoft YaHei', sans-serif;
+  background: var(--page-bg);
+}
+
+/* 细滚动条，避免侧边栏与表格出现粗灰条 */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: #c9ced6;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #a8b0bb;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* ---------------- 页面容器 ---------------- */
+
+.page {
+  padding: 16px;
+}
+
+.page-card + .page-card {
+  margin-top: 16px;
+}
+
+/* 列表页顶部筛选区：与下方表格卡片拉开距离 */
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.filter-bar .spacer {
+  flex: 1;
+}
+
+/* 表格里的图片缩略图 */
+.cell-thumb {
+  width: 64px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid #eee;
+  display: block;
+}
+
+/* 表格里的主副两行文字 */
+.cell-main {
+  font-weight: 500;
+  color: #1a2a3a;
+}
+
+.cell-sub {
+  font-size: 12px;
+  color: #8c8c8c;
+  margin-top: 2px;
+}
+
+/* 表格单元格允许换行且不撑破列宽 */
+.ant-table-cell .cell-wrap {
+  word-break: break-word;
+  white-space: normal;
+}
+
+/* ---------------- 登录页 ---------------- */
+
+.login-page {
+  min-height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #0a17da 0%, #3d4ce8 55%, #6b78f2 100%);
+}
+
+.login-card {
+  width: 380px;
+  padding: 8px;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 18px 48px rgba(8, 19, 176, 0.28);
+}
+
+.login-brand {
+  text-align: center;
+  padding: 12px 0 4px;
+}
+
+.login-brand h1 {
+  margin: 0;
+  font-size: 20px;
+  color: #1a2a3a;
+}
+
+.login-brand p {
+  margin: 6px 0 0;
+  font-size: 13px;
+  color: #8c8c8c;
+}
+
+.login-hint {
+  margin-top: 4px;
+  padding: 10px 12px;
+  border-radius: 6px;
+  background: #f5f7fa;
+  font-size: 12px;
+  color: #666;
+  line-height: 1.8;
+}
+
+/* ---------------- 富文本编辑器 ---------------- */
+
+.rich-editor {
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #fff;
+}
+
+.rich-editor:focus-within {
+  border-color: var(--brand);
+  box-shadow: 0 0 0 2px rgba(10, 23, 218, 0.1);
+}
+
+.rich-editor-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px;
+  padding: 6px 8px;
+  border-bottom: 1px solid #f0f0f0;
+  background: #fafafa;
+}
+
+.rich-editor-body {
+  min-height: 220px;
+  max-height: 520px;
+  overflow-y: auto;
+  padding: 12px 14px;
+  outline: none;
+  line-height: 1.75;
+  color: #333;
+}
+
+.rich-editor-body:empty::before {
+  content: attr(data-placeholder);
+  color: #bfbfbf;
+}
+
+.rich-editor-body h3 {
+  margin: 16px 0 8px;
+  font-size: 16px;
+}
+
+.rich-editor-body p {
+  margin: 8px 0;
+}
+
+.rich-editor-body ul,
+.rich-editor-body ol {
+  padding-left: 22px;
+}
+
+.rich-editor-body img {
+  max-width: 100%;
+}
+
+/* 详情预览区（新闻/商品详情弹窗里展示富文本） */
+.rich-preview {
+  line-height: 1.8;
+  color: #333;
+  word-break: break-word;
+}
+
+.rich-preview img {
+  max-width: 100%;
+}
+
+/* ---------------- 仪表盘 ---------------- */
+
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.stat-card .stat-value {
+  font-size: 26px;
+  font-weight: 600;
+  color: #1a2a3a;
+  line-height: 1.3;
+}
+
+.stat-card .stat-label {
+  font-size: 13px;
+  color: #8c8c8c;
+}
+
+.stat-card .stat-icon {
+  font-size: 22px;
+  color: var(--brand);
+}
+
+.chart-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+  gap: 16px;
+}
+
+.chart-box {
+  height: 300px;
+  width: 100%;
+}
+
+/* ---------------- 布局 ---------------- */
+
+.layout-root {
+  height: 100%;
+}
+
+.layout-sider {
+  background: #001529;
+}
+
+.layout-logo {
+  height: var(--header-h);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 16px;
+  color: #fff;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.layout-logo img {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.layout-logo span {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.layout-header {
+  height: var(--header-h);
+  padding: 0 16px;
+  background: #fff;
+  border-bottom: 1px solid #f0f0f0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.layout-header .spacer {
+  flex: 1;
+}
+
+.layout-tabs {
+  height: var(--tabs-h);
+  padding: 0 12px;
+  background: #fff;
+  border-bottom: 1px solid #f0f0f0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow-x: auto;
+}
+
+.layout-content {
+  height: calc(100vh - var(--header-h));
+  overflow-y: auto;
+  background: var(--page-bg);
+}
+
+.layout-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border: 1px solid #e5e9f0;
+  border-radius: 4px;
+  background: #fafafa;
+  font-size: 13px;
+  color: #555;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.layout-tab.active {
+  background: #eef1ff;
+  border-color: #aab4f7;
+  color: var(--brand);
+}
+
+.layout-tab .close {
+  font-size: 11px;
+  color: #999;
+}
+
+.layout-tab .close:hover {
+  color: #e63946;
+}
+
+.breadcrumb-bar {
+  padding: 12px 16px 0;
+}
